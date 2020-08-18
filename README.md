@@ -92,4 +92,13 @@ Postfix polls (puls messages from queues ) all queues in the directory specified
 # active
         The active queue is somewhat analogous to an operating system's process run queue. Messages in the active queue are ready to be sent, but are not necessarily in the process of being sent.
 # hold
-        The administrator can define smtpd access(5) policies and cleanup header and body checks (see Chapter 10) that cause messages to be automatically diverted from normal processing and placed indefinitely in the hold queue. Messages placed in the hold queue stay there until the administrator intervenes. No periodic delivery attempts are made for messages in the hold queue. You can run the postsuper command to manually put messages on hold or to release messages from the hold queue into the deferred queue.
+         Messages placed in the hold queue stay there until the administrator intervenes. No periodic delivery attempts are made for messages in the hold queue. You can run the postsuper command to manually put messages on hold or to release messages from the hold queue into the deferred queue.
+# corrupt
+        The corrupt directory contains damaged queue files. Rather than discarding these, Postfix stores them here so that the (human) postmaster can inspect them using postcat.
+# Maps
+        Maps are files and databases that Postfix uses to look up information. Maps have many different purposes, but they all have one thing in common--a left-hand side (LHS, or key) and a right-hand side (RHS, or value).
+
+![logo](/images/maps.png)
+
+# Indexed Maps (hash, btree, dbm)
+Indexed maps are binary databases built from regular text files with commands such as newaliases, postalias, and postmap. The binary maps have an indexed format so that Postfix can quickly retrieve the value associated with a key. As a further performance improvement, the Postfix daemons open these maps when starting up, and they do not re-read them unless they notice a change in the map files in the filesystem. To reload a map, a daemon exits and a new one is started by the master daemon.
