@@ -45,8 +45,18 @@ You will be asked to select a type for mail configuration. Normally, you will wa
 - Local only means emails are transmitted only between local user accounts.
 
 Next, enter your domain name for the system mail name, i.e. the domain name after @ symbol. For example, my email address is xiao@linuxbabe.com, so I entered linuxbabe.com for the system mail name. This domain name will be appended to addresses that doesn’t have a domain name specified.
-![logo](/images/postfix_interent.png)
+![logo](/images/postfix_config.png)
 
 Once installed, Postfix will be automatically started and a /etc/postfix/main.cf file will be generated. Now we can check Postfix version with this command:
 
+```
 postconf mail_version
+```
+# check to see postfix port
+The netstat utility tells us that the Postfix master process is listening on TCP port 25. (If your Ubuntu server doesn’t have the netstat command, you can run sudo apt install net-tools command to install it.)
+
+```
+sudo netstat -lnpt
+```
+
+Postfix ships with many binaries under the /usr/sbin/ directory, as can be seen with the following command.
