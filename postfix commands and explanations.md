@@ -12,3 +12,14 @@ An A record maps an FQDN to an IP address.
 ```
 mail.linuxbabe.com        <IP-address>
 ```
+# What is a PTR record
+A pointer record, or PTR record, maps an IP address to an FQDN. It’s the counterpart to the A record and is used for reverse DNS (rDNS) lookup.
+
+Reverse resolution of IP address with PTR record can help with blocking spammers. Many MTAs accept email only if the server is really responsible for a certain domain. You should definitely set a PTR record for your email server so your emails have a better chance of landing in the recipient’s inbox instead of the spam folder.
+
+To check the PTR record for an IP address, you can use the following command.
+```
+dig -x <IP> +short
+or
+host <IP>
+```
