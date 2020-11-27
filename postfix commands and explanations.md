@@ -23,3 +23,14 @@ dig -x <IP> +short
 or
 host <IP>
 ```
+# who manages PTR
+PTR record isn’t managed by your domain registrar. It’s managed by the person who gives you an IP address. Because you get IP address from your hosting provider, not from your domain registrar, so you must set PTR record for your IP address in your hosting provider’s control panel. Its value should be your mail server’s hostname: mail.your-domain.com. If your server uses IPv6 address, then add a PTR record for your IPv6 address as well.
+
+Note: Gmail will actually check the A record of the hostname specified in the PTR record. If the hostname resolves to the same IP address, Gmail will accept your email. Otherwise, it will reject your email.
+
+# Installing Postfix
+```
+sudo apt-get update
+
+sudo apt-get install postfix -y
+```
