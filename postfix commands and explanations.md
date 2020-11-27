@@ -34,3 +34,19 @@ sudo apt-get update
 
 sudo apt-get install postfix -y
 ```
+
+You will be asked to select a type for mail configuration. Normally, you will want to select the second type: Internet Site.
+![logo](/images/internet.png)
+
+- No configuration means the installation process will not configure any parameters.
+- Internet Site means using Postfix for sending emails to other MTAs and receiving email from other MTAs.
+- Internet with smarthost means using postfix to receive email from other MTAs, but using another smart host to relay emails to the recipient.
+- Satellite system means using smart host for sending and receiving email.
+- Local only means emails are transmitted only between local user accounts.
+
+Next, enter your domain name for the system mail name, i.e. the domain name after @ symbol. For example, my email address is xiao@linuxbabe.com, so I entered linuxbabe.com for the system mail name. This domain name will be appended to addresses that doesn’t have a domain name specified.
+![logo](/images/postfix_interent.png)
+
+Once installed, Postfix will be automatically started and a /etc/postfix/main.cf file will be generated. Now we can check Postfix version with this command:
+
+postconf mail_version
