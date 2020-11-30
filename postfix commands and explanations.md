@@ -36,6 +36,7 @@ sudo apt-get install postfix -y
 ```
 
 You will be asked to select a type for mail configuration. Normally, you will want to select the second type: Internet Site.
+
 ![logo](/images/internet.png)
 
 - No configuration means the installation process will not configure any parameters.
@@ -45,6 +46,7 @@ You will be asked to select a type for mail configuration. Normally, you will wa
 - Local only means emails are transmitted only between local user accounts.
 
 Next, enter your domain name for the system mail name, i.e. the domain name after @ symbol. For example, my email address is xiao@linuxbabe.com, so I entered linuxbabe.com for the system mail name. This domain name will be appended to addresses that doesn’t have a domain name specified.
+
 ![logo](/images/postfix_config.png)
 
 Once installed, Postfix will be automatically started and a /etc/postfix/main.cf file will be generated. Now we can check Postfix version with this command:
@@ -60,3 +62,37 @@ sudo netstat -lnpt
 ```
 
 Postfix ships with many binaries under the /usr/sbin/ directory, as can be seen with the following command.
+
+```
+dpkg -L postfix | grep /usr/sbin/
+```
+
+```
+/usr/sbin/postalias
+/usr/sbin/postcat
+/usr/sbin/postconf
+/usr/sbin/postdrop
+/usr/sbin/postfix
+/usr/sbin/postfix-add-filter
+/usr/sbin/postfix-add-policy
+/usr/sbin/postkick
+/usr/sbin/postlock
+/usr/sbin/postlog
+/usr/sbin/postmap
+/usr/sbin/postmulti
+/usr/sbin/postqueue
+/usr/sbin/postsuper
+/usr/sbin/posttls-finger
+/usr/sbin/qmqp-sink
+/usr/sbin/qmqp-source
+/usr/sbin/qshape
+/usr/sbin/rmail
+/usr/sbin/sendmail
+/usr/sbin/smtp-sink
+/usr/sbin/smtp-source
+```
+
+**find out what settings are overruled by postfix**
+```
+postconf -n
+```
