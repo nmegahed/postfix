@@ -161,3 +161,10 @@ sudo chmod 0600 /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
 ```
 
 **Adding Sender Addresses**
+- You need to add sender domain or sender address in order to send email via mailjet. In mailjet dashboard, click manage sender addresses. You can validate your entire domain or specific email addresses.
+
+![logo](/images/senders.jpeg)
+
+![logo](/images/addresses.jpeg)
+
+
