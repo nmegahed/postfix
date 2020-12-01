@@ -167,4 +167,42 @@ sudo chmod 0600 /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
 
 ![logo](/images/addresses.jpeg)
 
+**Setting up Domain Authentication**
+In this step, we need to set up SPF and DKIM record, which is strongly recommended if you want your emails to land in recipient’s inbox rather than spam folder.
 
+SPF: Sender Policy Framework. This is a DNS record that specifies what IP addresses are allowed to send email from your domain.
+DKIM: DomainKeys Identified Mail. Mailjet will digitally sign your emails with a private key. The DKIM record contains a public key that allows recipient’s email server to verify the signature.
+In mailjet dashboard, click setup domain authentication. By default, SPF status and DKIM status are both in error. Click manage button and follow the instructions to add SPF and DKIM records.
+
+![logo](/images/SPF_DKIM.jpeg)
+
+**Sending Test Email**
+Now we can send a test email with mailx command like below.
+```
+sudo apt install bsd-mailx
+
+echo "this is a test email." | mailx -r from-address -s hello to-address
+```
+
+**Troubleshooting**
+
+- If your email wasn’t delivered and you found the following message in the mail log (/var/log/mail.log),
+```
+Relay access denied (in reply to RCPT TO command))
+```
+- then you might need to edit the /etc/postfix/sasl_passwd file and remove the port number after the hostname like below.
+```
+in-v3.mailjet.com    api-key:secret-key
+```
+- Save and close the file. Then build the index file again.
+```
+sudo postmap /etc/postfix/sasl_passwd
+```
+- Restart Postfix for the changes to take effect.
+```
+sudo systemctl restart postfix
+```
+Now you can flush the email queue (attempt to deliver the previous emails).
+```
+sudo postqueue -f
+```
