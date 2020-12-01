@@ -96,3 +96,68 @@ dpkg -L postfix | grep /usr/sbin/
 ```
 postconf -n
 ```
+
+**send email to postfix server**
+
+By default you can send an email directly to the postfix server , directly from your localhost. You need to use an authenticated email provider like google or hotmail to send email to the postfix server.
+```
+To: ubunut@mail.scx-dev.net 
+subject: test 
+message: test
+```
+
+**setting up smtp to enable postfix to send emails to outside world**
+- Register for a mailjet accout to host an smtp relay server 
+```
+mailjet.com
+```
+- configure the smtp relay host by adding the following in /etc/postfix/main.cf as below
+```
+relayhost = in-v3.mailjet.com:587
+```
+- Go the dashboard settings in mailjet
+
+![logo](/images/mail_jet_dashboard.jpeg)
+
+- Select Settings
+
+![logo](/images/smtp_settings.png)
+
+- Add the following configuration at the end of the main.cf
+```
+# outbound relay configurations
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_tls_security_level = may
+header_size_limit = 4096000
+```
+- Save and close the file. Then create the /etc/postfix/sasl_passwd file.
+
+```
+sudo nano /etc/postfix/sasl_passwd
+```
+
+- Add the SMTP relay host and SMTP credentials to this file like below. Replace api-key and secret-key with your real Mailjet API key and secret key
+
+```
+in-v3.mailjet.com:587  api-key:secret-key
+```
+
+- Save and close the file. Then create the corresponding hash db file with postmap
+```
+sudo postmap /etc/postfix/sasl_passwd
+```
+
+- Now you should have a file /etc/postfix/sasl_passwd.db. Restart Postfix for the changes to take effect.
+```
+sudo systemctl restart postfix
+```
+
+- By default, sasl_passwd and sasl_passwd.db file can be read by any user on the server.  Change the permission to 600 so only root can read and write to these two files.
+
+```
+sudo chmod 0600 /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
+```
+
+**Adding Sender Addresses**
