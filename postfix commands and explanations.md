@@ -97,16 +97,10 @@ dpkg -L postfix | grep /usr/sbin/
 postconf -n
 ```
 
-**send email to postfix server**
-
-By default you can send an email directly to the postfix server , directly from your localhost. You need to use an authenticated email provider like google or hotmail to send email to the postfix server.
-```
-To: ubunut@mail.scx-dev.net 
-subject: test 
-message: test
-```
-
 **setting up smtp to enable postfix to send emails to outside world**
+
+SMTP port 25 is blocked by ISP so you need to setup an SMTP mail serve relay
+
 - Register for a mailjet accout to host an smtp relay server 
 ```
 mailjet.com
@@ -168,6 +162,7 @@ sudo chmod 0600 /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
 ![logo](/images/addresses.jpeg)
 
 **Setting up Domain Authentication**
+
 In this step, we need to set up SPF and DKIM record, which is strongly recommended if you want your emails to land in recipient’s inbox rather than spam folder.
 
 SPF: Sender Policy Framework. This is a DNS record that specifies what IP addresses are allowed to send email from your domain.
