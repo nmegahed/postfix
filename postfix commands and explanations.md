@@ -97,7 +97,7 @@ dpkg -L postfix | grep /usr/sbin/
 postconf -n
 ```
 
-**setting up smtp to enable postfix to send emails to outside world**
+## setting up smtp to enable postfix to send emails to outside world
 
 SMTP port 25 is blocked by ISP so you need to setup an SMTP mail serve relay
 
@@ -154,14 +154,14 @@ sudo systemctl restart postfix
 sudo chmod 0600 /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
 ```
 
-**Adding Sender Addresses**
+## Adding Sender Addresses
 - You need to add sender domain or sender address in order to send email via mailjet. In mailjet dashboard, click manage sender addresses. You can validate your entire domain or specific email addresses.
 
 ![logo](/images/senders.jpeg)
 
 ![logo](/images/addresses.jpeg)
 
-**Setting up Domain Authentication**
+## Setting up Domain Authentication
 
 In this step, we need to set up SPF and DKIM record, which is strongly recommended if you want your emails to land in recipient’s inbox rather than spam folder.
 
@@ -171,7 +171,7 @@ In mailjet dashboard, click setup domain authentication. By default, SPF status 
 
 ![logo](/images/SPF_DKIM.jpeg)
 
-**Sending Test Email**
+## Sending Test Email
 Now we can send a test email with mailx command like below.
 ```
 sudo apt install bsd-mailx
@@ -179,7 +179,7 @@ sudo apt install bsd-mailx
 echo "this is a test email." | mailx -r from-address -s hello to-address
 ```
 
-**Troubleshooting**
+## Troubleshooting
 
 - If your email wasn’t delivered and you found the following message in the mail log (/var/log/mail.log),
 ```
